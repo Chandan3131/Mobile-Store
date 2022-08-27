@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        * {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #container {
+            width: 410px;
+            margin: auto;
+            border: 3px solid green;
+            border-radius: 5px;
+        }
+
+        #formContainerer {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        input {
+            width: 375px;
+            margin: 6px;
+        }
+
+        #submit {
+            width: 395px;
+            background-color: green;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+
+        input {
+            padding: 10px;
+            cursor: pointer;
+            border: 1px solid green;
+            border-radius: 5px;
+        }
+
+        h2 {
+            text-align: center;
+            color: green;
+            font-weight: bold;
+        }
+
+        h1 {
+            text-align: center;
+            color: green;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Make Payment</h1>
+    <div id="container">
+        <h2>Enter Card Details </h2>
+        <div id="formContainer">
+            <form id="paymentForm">
+                <input type="number" id="cardNumber" placeholder="Card Number" required>
+                <input type="number" id="cvv" placeholder="CVV" required>
+                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="submit" id="submit" value="Make Payment">
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    document.querySelector("#paymentForm").addEventListener("submit", validCheck);
+    function validCheck() {
+        event.preventDefault();
+
+        var cardNumber = document.querySelector("#cardNumber").value;
+        var cvv = document.querySelector("#cvv").value;
+        var name = document.querySelector("#name").value;
+
+        if (cardNumber.length !== 16) {
+            alert("Invalid Card Number");
+            return;
+        }
+
+        if (cvv.length !== 3) {
+            alert("Invalid CVV");
+            return;
+        }
+
+
+        for(var i = 0 ; i < name.length ; i++){
+
+            if(name[i] == " "){
+                continue;
+            }
+            
+            if(name[i] >= 0 && name[i] <= 9){
+                alert("Invalid Name");
+                return;
+            }
+        }
+
+
+        window.location.href = "./otpVerification.html";
+
+    }
+</script>
+
+</html>

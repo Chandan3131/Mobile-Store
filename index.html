@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Store</title>
+  <style>
+    
+    h1 {
+      text-align: right;
+      color: green;
+    }
+
+    #header{
+      display: flex;
+      justify-content: space-around;
+      padding-top: 50px;
+    }
+
+
+    #container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 20px;
+      row-gap: 20px;
+    }
+
+    #box {
+     margin-top: 60px;
+      border: 2px solid green;
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+      border-radius: 5px;
+      text-align: center;
+      padding-top: 30px;
+      padding-bottom: 50px;
+    }
+
+    #cartButton{
+      width: 180px;
+      height: 50px;
+    }
+
+    h3 {
+      text-align: center;
+      color: blue;
+    }
+
+    h4 {
+      text-align: center;
+      color: red;
+    }
+
+    img {
+      width: 60%;
+    }
+
+    button {
+      padding: 10px;
+      width: 60%;
+      margin-bottom: 20px;
+      cursor: pointer;
+      background-color: green;
+      color: white;
+      border-radius: 10px;
+    }
+
+    @media all and (min-width: 451px) and (max-width: 830px) {
+      #container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 20px;
+        row-gap: 20px;
+      }
+    }
+
+    /* Small */
+    @media all and (min-width: 80px) and (max-width: 450px) {
+      #container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        column-gap: 20px;
+        row-gap: 20px;
+      }
+    }
+
+    select{
+       background-color: green;
+        height: 40px;
+        color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header">
+    <h1 style="width: 650px;">Mobile Store</h1>
+    <select id = "priceSort">
+        <option value = "none"> Sort By Price</option>
+        <option value="lowTohigh">Low To High</option>
+        <option value="hightoLow">High To Low</option>
+    </select>
+    <select id = ratingsort onchange="ratingSort()"> 
+        <option> Sort By Rating</option>
+        <option value="lowTohigh">Low To High</option>
+        <option value="highTolow">High To Low</option>
+    </select>
+    <a href="./cart.html"><button id = "cartButton">Go To Cart</button></a>
+  </div>
+  <div id="container">
+  </div>
+</body>
+<script>
+ 
+ var data = [
+    {
+      name: "SAMSUNG Galaxy F12",
+      rating: 4,
+      image_url:
+        "https://rukminim1.flixcart.com/image/312/312/kn22m4w0/mobile/a/q/8/galaxy-f12-sm-f127gzgiins-samsung-original-imagftmjw3xqg4yk.jpeg?q=70",
+      price: 11499,
+    },
+    {
+      name: "SAMSUNG Galaxy F42",
+      rating: 4.2,
+      image_url:
+        "https://rukminim1.flixcart.com/image/312/312/ku4ezrk0/mobile/v/5/e/galaxy-f42-5g-sm-e426bzahins-samsung-original-imag7anfwxsgumgz.jpeg?q=70",
+      price: 12199,
+    },
+    {
+      name: "Apple Iphone 12",
+      rating: 4.6,
+      image_url:
+        "https://rukminim1.flixcart.com/image/312/312/kg8avm80/mobile/r/h/z/apple-iphone-12-dummyapplefsn-original-imafwg8dqgncgbcb.jpeg?q=70",
+      price: 59999,
+    },
+    {
+      name: "APPLE iPhone 12 Mini",
+      rating: 4.5,
+      image_url:
+        "https://rukminim1.flixcart.com/image/312/312/kg8avm80/mobile/d/g/b/apple-iphone-12-mini-dummyapplefsn-original-imafwgbfhfevaajh.jpeg?q=70",
+      price: 49999,
+    },
+    {
+      name: "OPPO A12",
+      rating: 3.8,
+      image_url:
+        "https://rukminim1.flixcart.com/image/312/312/kb1470w0/mobile/q/g/g/oppo-a12-cph2083-original-imafsh2hfkyamqyt.jpeg?q=70",
+      price: 9490,
+    },
+    {
+      name: "ASUS ROG Phone 3",
+      rating: 4.9,
+      image_url:
+        "https://rukminim1.flixcart.com/image/312/312/kcuug7k0/mobile/g/h/e/asus-rog-phone-3-zs661ks-6a006in-original-imaftwc6nmyuyekd.jpeg?q=70",
+      price: 46999,
+    },
+    {
+      name: "DIZO Star 300",
+      rating: 3.4,
+      image_url:
+        "https://rukminim1.flixcart.com/image/312/312/kqpj4i80/mobile/e/i/r/star-300-dh2001-dizo-original-imag4nmpv7zahzs2.jpeg?q=70",
+      price: 1299,
+    },
+    {
+      name: "Micromax IN Note 1 ",
+      rating: 4.4,
+      image_url:
+        "https://rukminim1.flixcart.com/image/312/312/ku5ufm80/mobile/v/t/1/in-note-1-e7746-micromax-original-imag7cdgz6tqychm.jpeg?q=70",
+      price: 10999,
+    },
+  ];
+var cartItem = JSON.parse(localStorage.getItem('cartItem')) || []
+
+
+document.querySelector('#priceSort').addEventListener('change', function() {
+      var sortType = document.querySelector('#priceSort').value;
+      var data =  data.sort(function(a, b) {
+          if(sortType === 'lowTohigh') {
+            return a.price - b.price;
+          } 
+          return b.price - a.price;
+        });
+        showData(data);
+    });
+
+    showData(data);
+
+function showData(data){
+    data.forEach(function (ele) {
+    var box = document.createElement("div");
+    box.setAttribute("id", "box");
+
+    var img = document.createElement("img");
+    img.src = ele.image_url;
+
+    img.style.height = "400px"
+    var name = document.createElement("h3");
+    name.innerText = ele.name;
+
+    var price = document.createElement("h4");
+    price.innerText = "₹  " + ele.price;
+
+    name.style.height = "40px"
+
+    var button = document.createElement("button");
+    button.innerText = "ADD TO CART";
+
+    var rating = document.createElement("h3");
+    rating.innerText = "Rating  " + ele.rating;
+
+    button.addEventListener("click",function(){
+      cartItem.push(ele);
+      localStorage.setItem('cartItem', JSON.stringify(cartItem));
+
+      alert(ele.name + " added successfully to cart")
+    })
+
+
+    box.append(img, name, price,rating, button);
+    document.querySelector("#container").append(box);
+
+  })
+
+}
+  
+
+</script>
+
+</html>

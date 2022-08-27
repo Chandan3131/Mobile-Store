@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        #container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            height: 500px;
+            justify-content: space-around;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        #cart {
+            /* border: 1px solid red; */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 800px;
+            text-align: center;
+        }
+
+        #box {
+            border: 2px solid green;
+            padding-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        #payment {
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #input {
+            padding: 12px;
+            width: 300px;
+            margin-top: 5px;
+
+            margin-bottom: 5px;
+        }
+
+        #apply,
+        #goPayment {
+            font-size: 20px;
+            width: 330px;
+            margin-bottom: 10px;
+            background-color: green;
+            color: white;
+            font-weight: bold;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+            font-size: 40px;
+        }
+
+        #discount{
+            color: green;
+        }
+
+        h2{
+            color: red;
+        }
+
+        h4,
+        h3 {
+            text-align: center;
+            color: blue;
+        }
+
+        h4 {
+            color: red;
+        }
+
+        #remove {
+            padding: 10px;
+            width: 60%;
+            margin-bottom: 20px;
+            cursor: pointer;
+            background-color: green;
+            color: white;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Cart</h1>
+    <div id="container">
+        <div id="cart"></div>
+        <div id="payment"></div>
+    </div>
+</body>
+<script>
+
+    var cartItem = JSON.parse(localStorage.getItem("cartItem"));
+
+    cartItem.forEach(function (ele, i, arr) {
+        var cart = document.getElementById("cart");
+
+        var box = document.createElement("div");
+        box.setAttribute("id", "box");
+
+        var img = document.createElement("img");
+        img.src = ele.image_url;
+        img.style.marginTop = "20px";
+        img.style.height = "350px"
+
+        var name = document.createElement("h3");
+        name.innerText = ele.name;
+
+        var price = document.createElement("h4");
+        price.innerText = "₹  " + ele.price;
+
+        var button = document.createElement("button");
+
+        button.setAttribute("id", "remove");
+        button.innerText = "Remove From Cart";
+
+        button.addEventListener("click", function () {
+            cartItem.splice(i, 1);
+            localStorage.setItem('cartItem', JSON.stringify(cartItem));
+            alert("Item Removed");
+            window.location.reload();
+        })
+
+        box.append(img, name, price, button);
+
+        cart.append(box);
+    });
+
+    var payment = document.getElementById("payment");
+
+    var price = document.createElement("h2");
+    price.setAttribute("id", "price");
+
+    var input = document.createElement("input");
+    input.setAttribute("id", "input");
+    input.placeholder = "Apply Coupon Code "
+
+    var apply = document.createElement("button");
+    apply.setAttribute("id", "apply");
+    apply.innerText = "APPLY"
+
+    var discount = document.createElement("h2");
+    discount.setAttribute("id", "discount");
+    discount.innerText = "Discount : ₹0"
+
+    var subTotal = document.createElement("h2");
+    price.setAttribute("id", "subTotal");
+
+    var goPayment = document.createElement("button");
+    goPayment.setAttribute("id", "goPayment");
+
+
+
+
+    var total = 0;
+
+    cartItem.forEach(function (ele) {
+        total = total + Number(ele.price);
+    })
+
+    price.innerText = "Total Price : ₹" + total;
+    subTotal.innerText = "Sub Total : ₹" + total;
+    apply.addEventListener("click", function () {
+
+        var coupon = input.value;
+        console.log(coupon)
+
+
+
+        if (coupon == "masai30") {
+            var disc = total * 30 / 100;
+            discount.innerText = "Discount : ₹" + disc;
+            subTotal.innerText = "Sub Total : ₹" + Number(total - disc);
+            alert("Congrats Enjoy 30% Discount");
+        } else {
+            alert("Invalid Coupon Code");
+        }
+        show(discount);
+    });
+
+    goPayment.innerText = "Make Payment"
+
+    payment.append(price, input, apply, discount, subTotal, goPayment);
+
+    function show(discount) {
+        payment.append(price, input, apply, discount, subTotal, goPayment);
+    }
+
+    goPayment.addEventListener("click",function(){
+        myFunc();
+    })
+
+    function myFunc(){
+        window.location.href = "./paymentGatway.html"
+    }
+
+
+</script>
+
+</html>

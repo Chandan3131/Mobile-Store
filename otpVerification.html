@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <style>
+        *{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #container{
+            width: 410px;
+            margin:auto;
+            border: 3px solid green;
+            border-radius: 5px;
+        }
+        #formContainerer{
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        input{
+            width: 375px;
+            margin: 6px;
+        }
+
+        #submit{
+           width: 395px;
+           background-color: green;
+           border: none;
+           color: white;
+           border-radius: 5px;
+        }
+
+        input{
+            padding: 10px;
+            cursor: pointer;
+            border: 1px solid green;
+            border-radius: 5px;
+        }
+
+        h5{
+            text-align: center;
+            color: red;
+            font-weight: bold;
+        }
+
+        h1{
+            text-align: center;
+            color: green;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <h1>OTP Verification</h1>
+    <div id="container">
+        <h5>OTP successfully send to your registered mobile number</h5>
+        <div id="formContainer">
+            <form  id="otpForm">
+                <input type="number" id="otp" placeholder="Enter five digits OTP">
+                <input type="submit" id="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    document.querySelector("#otpForm").addEventListener("submit",verifyOTP);
+
+    function verifyOTP(){
+        event.preventDefault();
+        var otp = document.querySelector("#otp").value;
+        if(otp == "12345"){
+            alert("Payment Success");
+            window.location.href = "/congratsPage.html"
+        }else{
+            alert("Wrong OTP");
+        }
+    }
+</script>
+</html>
